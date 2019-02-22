@@ -1,0 +1,59 @@
+.image-details{
+    .image-info{
+        fa-icon.edit-icon{float: right;cursor: pointer;}
+        fa-icon.remove-icon{float: right;cursor: pointer;color:crimson}
+    }
+}
+.card{
+    margin-bottom: 35px;
+    .main-img{
+        max-height: 550px;
+    }
+}
+.comments{
+    // max-height: 400px;
+    // overflow-y: auto;
+    .media{
+        padding: 10px 0;
+        border-bottom: 2px solid #f5f5f5;
+        &:last-child{
+            border:none;
+        }
+        .gravatar{
+            width:65px;
+            height: 65px;
+            /*background-color: #f5f5f5;*/
+        }
+        .comment-actions{
+            span{
+                font-size: 14px;
+                cursor: pointer;
+                display: inline;
+            }
+        }
+    }
+}
+
+.image-description{
+    margin-bottom: 0;
+    padding: 10px 0;
+    color: #515151;
+}
+
+input[type=text].form-control{
+    text-align: left;
+    display: block;
+    width: 100%;
+    margin: 0;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

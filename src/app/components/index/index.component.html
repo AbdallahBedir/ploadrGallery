@@ -1,0 +1,60 @@
+<div class="index-page">
+  <section class="upload-img-section">
+    <div class="card">
+      <div class="card-header">
+        <h5>Upload an image</h5>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="form-group row">
+            <label for="uploadFile" class="col-sm-2 col-form-label">Browse</label>
+            <div class="col-sm-10">
+              <dropzone #photoDropzone [message]="'Have a photo? click or drag to upload'"></dropzone>
+              <span *ngIf="errorMsgs.avatar" class="text-danger">{{errorMsgs.avatar}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+            <div class="col-sm-10">
+              <input type="text" name="title" class="form-control" id="inputTitle" placeholder="Title" [(ngModel)]="image.title">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+              <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Description" [(ngModel)]="image.description">
+            </div>
+          </div>
+          <div class="form-group text-success" *ngIf="successMsg">
+            {{successMsg}}
+          </div>
+          <div class="form-group" style="overflow:hidden">
+            <button type="submit" class="btn btn-success float-right" (click)="uploadImage()">
+              <fa-icon [icon]="faUpload"></fa-icon>
+              Upload Image
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <section class="newest-images-section">
+    <div class="card">
+      <div class="card-header">
+          <h5>Newest Images</h5>
+      </div>
+      <div class="card-body">
+        <div class="images">
+          <div class="row">
+            <div class="col-md-4" *ngFor="let i of newestImages">
+              <div class="image-holder">
+                <img [attr.src]="i.path" [attr.alt]="i.title" [routerLink]="['/images',i.id]">
+              </div>
+            </div>
+          </div>
+        </div>
+        <p *ngIf="newestImages && newestImages.length ==0">No images yet.</p>
+      </div>
+    </div>
+  </section>
+</div>

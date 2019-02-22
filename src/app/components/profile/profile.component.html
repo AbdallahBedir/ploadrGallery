@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+              <h5>Profile</h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group row">
+                      <label for="inputTitle" class="col-sm-2 col-form-label">Username</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="username" class="second" name="username" placeholder="Username*" [(ngModel)]="payload.username">
+                        <span *ngIf="errorMsgs.username" class="text-danger">{{errorMsgs.username}}</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputDescription" class="col-sm-2 col-form-label">Password</label>
+                      <div class="col-sm-10">
+                        <input type="password" id="password" class="third" name="password" placeholder="Password*" [(ngModel)]="payload.password">
+                        <span *ngIf="errorMsgs.password" class="text-danger">{{errorMsgs.password}}</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputDescription" class="col-sm-2 col-form-label">Confirm Password</label>
+                      <div class="col-sm-10">
+                        <input type="password" id="confirm_password" class="third" name="confirm_password" placeholder="Confirm Password*" [(ngModel)]="payload.confirm_password">
+                        <span *ngIf="errorMsgs.confirm_password" class="text-danger">{{errorMsgs.confirm_password}}</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputDescription" class="col-sm-2 col-form-label">Photo</label>
+                        <div class="col-sm-10">                      
+                          <dropzone #photoDropzone [message]="'Have a photo? click or drag to upload'"></dropzone>
+                          <span *ngIf="errorMsgs.photo" class="text-danger">{{errorMsgs.photo}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group" style="overflow:hidden;text-align: center;">
+                        <input type="submit" class="fourth" value="Submit" (click)="updateProfile()">
+                      </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+  

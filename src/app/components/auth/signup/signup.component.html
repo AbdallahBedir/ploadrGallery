@@ -1,0 +1,30 @@
+<div class="signup-form">
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> -->
+        <h5>Signup</h5>
+      </div>
+  
+      <!-- Login Form -->
+      <form>
+        <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username*" [(ngModel)]="payload.username">
+        <span *ngIf="errorMsgs.username" class="text-danger">{{errorMsgs.username}}</span>
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password*" [(ngModel)]="payload.password">
+        <span *ngIf="errorMsgs.password" class="text-danger">{{errorMsgs.password}}</span>
+        <dropzone #photoDropzone [message]="'Have a photo? click or drag to upload'"></dropzone>
+        <span *ngIf="errorMsgs.photo" class="text-danger">{{errorMsgs.photo}}</span>
+        <input type="submit" class="fadeIn fourth" value="Submit" (click)="signup()">
+      </form>
+  
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a class="underlineHover" [routerLink]="['/login']">Already have an account? Login here.</a>
+      </div>
+  
+    </div>
+  </div>
+</div>

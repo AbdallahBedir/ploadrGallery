@@ -1,0 +1,47 @@
+<div class="images">
+  <div class="search">
+    <div class="form-group row">      
+      <div class="col-md-4">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-light" [class.active]="filters.owner == ''" (click)="filters.owner = '';resetPaginator()">
+              <input type="radio" name="owner" value="''" autocomplete="off"> All
+            </label>
+            <label class="btn btn-light" [class.active]="filters.owner == 'mine'" (click)="filters.owner = 'mine';resetPaginator()">
+              <input type="radio" name="owner" value="'mine'" autocomplete="off"> My photos
+            </label>
+            <label class="btn btn-light" [class.active]="filters.owner == 'others'" (click)="filters.owner = 'others';resetPaginator()">
+              <input type="radio" name="owner" value="'others'" autocomplete="off"> Others
+            </label>
+          </div>
+      </div>
+      <div class="col-md-6">
+        <input type="text" name="search" class="" placeholder="Search..." [(ngModel)]="filters.q" (ngModelChange)="resetPaginator()">
+      </div>
+    </div>
+  </div>
+  <div
+  class="search-results"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="150"
+  (scrolled)="filters.page = filters.page +1;listImages()">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let i of images">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" [attr.src]="i.path" [attr.alt]="i.title" [routerLink]="['/images',i._id]">
+          <div class="card-body">
+            <h5 class="card-title">{{i.title}}</h5>
+            <p class="card-text">{{i.description}}</p>
+            <!-- <a href="#" class="btn btn-primary">View</a> -->
+          </div>
+        </div>
+    </div>
+    <div class="no-images my-4" *ngIf="images && images.length == 0">
+      <p>There are no images</p>
+    </div>
+    <!-- <div class="load-more my-4" *ngIf="loadMore">
+      <button class="btn btn-light" (click)="filters.page = filters.page +1;listImages()">Load more</button>
+    </div> -->
+  </div>
+  </div>
+</div>

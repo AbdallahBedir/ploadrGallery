@@ -1,0 +1,152 @@
+<div class="image-details">
+  <div class="card image-info">
+    <div class="card-header">
+      <h5 *ngIf="!updateState.title">
+        {{image?.title}}
+        <fa-icon *ngIf="isMyImage" class="remove-icon mx-2" [icon]="icons.faTimesCircle" size="xs" data-toggle="modal" data-target="#deleteModal" title="Delete Image"></fa-icon>
+        <fa-icon *ngIf="isMyImage" class="edit-icon" [icon]="icons.faEdit" size="xs" (click)="updateState.title = true;payload.imgTitle = image?.title" title="Edit title"></fa-icon>
+      </h5>
+      <div *ngIf="updateState.title" class="edit-form">
+          <input type="text" name="img-title" class="form-control" placeholder="Title" [(ngModel)]="payload.imgTitle">
+          <div class="edit-actions mt-2">
+            <button class="btn btn-primary btn-sm mr-1" (click)="updateImage('title')">Save</button>
+            <button class="btn btn-light btn-sm" (click)="updateState.title = false">Cancel</button>
+          </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <img class="main-img" [attr.src]="image?.path" [attr.alt]="image?.title">
+      <p class="image-description" *ngIf="!updateState.description">
+        {{image?.description}}
+        <fa-icon *ngIf="isMyImage" class="edit-icon" [icon]="icons.faEdit" size="xs" (click)="updateState.description = true;payload.imgDescription = image?.description" title="Edit description"></fa-icon>
+      </p>   
+      <div *ngIf="updateState.description" class="edit-form mt-2">          
+          <textarea name="img-description" class="form-control" placeholder="Description" [(ngModel)]="payload.imgDescription"></textarea>
+          <div class="edit-actions mt-2">
+            <button class="btn btn-primary btn-sm mr-1" (click)="updateImage('description')">Save</button>
+            <button class="btn btn-light btn-sm" (click)="updateState.description = false">Cancel</button>
+          </div>
+      </div>  
+    </div>
+    <div class="card-footer text-muted">
+      <button type="submit" class="btn btn-success" (click)="likeImage()" [disabled]="isliked">
+        <fa-icon [icon]="icons.faHeart"></fa-icon>
+        Like
+      </button>
+      <b>&nbsp;{{image?.likes?.total}}&nbsp;-&nbsp;&nbsp;</b>
+      <b>
+        <fa-icon [icon]="icons.faEye"></fa-icon>
+        {{image?.views}} &nbsp;-&nbsp;
+      </b>
+      Posted:&nbsp;<span class="text-muted">{{image?.timestamp | timeAgo}}</span>
+    </div>
+  </div>
+
+  <div class="card">
+      <div class="card-header">
+        <h5>
+          Comments
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="comments" *ngIf="image?.comments">
+          <div class="media" *ngFor="let c of image.comments">
+            <img class="mr-3 rounded-circle" [attr.src]="c?.user?.photo || '/assets/imgs/profile-placeholder.jpg'" [attr.alt]="c.comment">
+            <div class="media-body">
+              <div class="comment-info" *ngIf="!updateState['comment'+c._id]">
+                  <p class="mt-1 mb-0">{{c.comment}}</p>
+                  <div class="comment-owner" >
+                    <b>{{c?.user?.username}} &nbsp;</b> <span class="text-muted">{{c.timestamp | timeAgo}}</span>
+                    <div class="comment-actions" *ngIf="c.user_id == userId">
+                      <span (click)="updateState['comment'+c._id] = true;payload.comment = c.comment" class="text-info">Edit</span>&nbsp;-&nbsp;<span class="text-danger" (click)="openDeleteCommentModal(c)">Delete</span>
+                    </div>
+                  </div>
+              </div>
+              <div *ngIf="updateState['comment'+c._id]" class="edit-form mt-2">          
+                  <textarea name="updated-comment" class="form-control" placeholder="Comment" [(ngModel)]="payload.comment"></textarea>
+                  <div class="edit-actions mt-2">
+                    <button class="btn btn-primary btn-sm mr-1" (click)="editComment(c)">Save</button>
+                    <button class="btn btn-light btn-sm" (click)="updateState['comment'+c._id] = false">Cancel</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <p *ngIf="image?.comments && image?.comments?.length == 0">No comments yet</p>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        <form #f="ngForm" (ngSubmit)="postComment(f)">
+          <!-- <div class="form-group row">
+            <label for="nameInput" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+              <input #nameInput="ngModel" type="text" [(ngModel)]="payload.name" placeholder="Name" name="name" class="form-control" id="nameInput" required>
+              <span *ngIf="(nameInput.touched && nameInput?.errors?.required) || (!formValid && !payload.name)" class="text-danger">Name is required</span>
+              <span *ngIf="errorMsgs.name" class="text-danger">{{errorMsgs.name}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="emailInput" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input type="email" placeholder="Email" [(ngModel)]="payload.email" name="email" class="form-control" id="emailInput">
+              <span *ngIf="errorMsgs.email" class="text-danger">{{errorMsgs.email}}</span>
+            </div>
+          </div> -->
+          <div class="form-group row">
+            <!-- <label for="commentInput" class="col-sm-2 col-form-label">Comment</label> -->
+            <div class="col-sm-12">
+              <textarea #commentInput="ngModel" class="form-control" name="comment" [(ngModel)]="payload.newComment" id="commentInput" placeholder="Comment" required></textarea>
+              <span *ngIf="(commentInput.touched && commentInput?.errors?.required) || (!formValid && !payload.newComment)" class="text-danger">Comment is required</span>
+              <span *ngIf="errorMsgs.comment" class="text-danger">{{errorMsgs.comment}}</span>
+            </div>
+          </div>
+          <div class="form-group" style="overflow:hidden">
+            <button type="submit" class="btn btn-success float-right">
+              <fa-icon [icon]="icons.faComment"></fa-icon>
+              Post
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Are you sure?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this image ?</p>
+        </div>
+        <div class="modal-footer">
+          <button (click)="deleteImage()" type="button" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteComment" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Are you sure?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this comment ?</p>
+        </div>
+        <div class="modal-footer">
+          <button (click)="deleteComment()" type="button" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+</div>

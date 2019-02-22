@@ -1,0 +1,13 @@
+.app-wrapper{
+    .app-title{
+        border-bottom: 1px solid #EEE;
+        padding: 40px 0 10px;
+        h1{
+            cursor: pointer;
+            display: inline-block;
+        }
+    }
+    .app-body{
+        padding: 30px 0;
+    }
+}

@@ -1,0 +1,66 @@
+<div class="sidebar">
+  <aside class="stats">
+    <div class="card">
+        <div class="card-header">
+            <h5>Stats</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled" *ngIf="stats">
+            <li>
+              Images: <span>{{stats.images}}</span>
+            </li>
+            <li>
+              Comments: <span>{{stats.comments}}</span>
+            </li>
+            <li>
+              Views: <span>{{stats.views}}</span>
+            </li>
+            <li>
+              Likes: <span>{{stats.likes}}</span>
+            </li>
+          </ul>
+        </div>
+    </div>
+  </aside>
+  <aside class="most-popular">
+    <div class="card">
+        <div class="card-header">
+            <h5>Most Popular</h5>
+        </div>
+        <div class="card-body">
+          <div class="images" *ngIf="popularImages">
+            <div class="row">
+              <div class="col-md-4" *ngFor="let i of popularImages">
+                <div class="image-holder">
+                  <img [attr.src]="i.path" [attr.alt]="i.title" [routerLink]="['/images',i.id]">
+                </div>
+              </div>
+            </div>
+          </div>
+          <p *ngIf="popularImages && popularImages.length ==0">No images yet.</p>
+        </div>
+    </div>
+  </aside>
+  <aside class="most-popular">
+    <div class="card">
+        <div class="card-header">
+          <h5>Latest Comments</h5>
+        </div>
+        <div class="card-body">
+          <div class="comments" *ngIf="latestComments">
+            <div class="media" *ngFor="let c of latestComments">
+              <img [attr.src]="c.image?.path || 'https://via.placeholder.com/200.png/09f/fff'" class="mr-3" [attr.alt]="c.image?.title" [routerLink]="['/images',c.image?.id]">
+              <div class="media-body">
+                <p class="mt-1 mb-0">{{c.comment}}</p>
+                <div class="comment-owner">
+                  <b>{{c?.user?.username}}</b> <span class="text-muted">{{c.timestamp | timeAgo}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end comments-->
+          <p *ngIf="latestComments && latestComments.length ==0">No comments yet.</p>
+        </div>
+    </div>
+  </aside>
+</div>

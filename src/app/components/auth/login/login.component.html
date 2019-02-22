@@ -1,0 +1,28 @@
+<div class="login-form">
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> -->
+        <h5>Log In</h5>
+      </div>
+  
+      <!-- Login Form -->
+      <form>
+        <input type="text" id="username" class="fadeIn second" name="username" placeholder="username" [(ngModel)]="payload.username">
+        <span *ngIf="errorMsgs.username" class="text-danger">{{errorMsgs.username}}</span>
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" [(ngModel)]="payload.password">
+        <span *ngIf="errorMsgs.password" class="text-danger">{{errorMsgs.password}}</span>
+        <input type="submit" class="fadeIn fourth" value="Log In" (click)="login()">
+      </form>
+  
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a class="underlineHover" [routerLink]="['/signup']">Don't have an account? Sign up.</a>
+      </div>
+  
+    </div>
+  </div>
+</div>

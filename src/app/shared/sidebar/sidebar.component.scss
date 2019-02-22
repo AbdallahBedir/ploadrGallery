@@ -1,0 +1,23 @@
+.stats{
+    ul {
+        li{
+            span {float: right;}
+        }
+    }
+}
+.most-popular{
+    .comments{
+        .media{
+            border-bottom: 2px solid #eee;
+            padding: 12px 0;
+            &:last-child{
+                border-bottom: 0;
+            }
+            .media-body{
+                .comment-owner{
+                    b{margin-right: 5px}
+                }
+            }
+        }
+    }
+}
