@@ -1,6 +1,8 @@
 
 
-const URL = "http://localhost:3000/api";
+let environment = 'prod';
+
+const URL = environment == 'prod' ? 'https://ploadrgallery.herokuapp.com/api' : 'http://localhost:3000/api';
 
 export const API = {
     URL:URL,
