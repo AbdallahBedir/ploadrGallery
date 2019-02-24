@@ -41,9 +41,11 @@ export class SignupComponent implements OnInit {
     },err =>{      
       if(err.error){
         this.authService.popErrorToast(err.error.message);
-        Object.keys(err.error.errors).forEach(key =>{
-          this.errorMsgs[key] = err.error.errors[key].message
-        })
+        if(err.error.errors){
+          Object.keys(err.error.errors).forEach(key =>{
+            this.errorMsgs[key] = err.error.errors[key].message
+          })
+        }
       }
     },()=>{
       this.photoDropzone.directiveRef.reset();
