@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild,ViewEncapsulation } from '@angular/core';
-import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faUpload ,faSpinner} from '@fortawesome/free-solid-svg-icons';
 import { AppService } from '../../services/app.service';
 import { DropzoneComponent } from 'ngx-dropzone-wrapper';
 
@@ -12,7 +12,11 @@ import { DropzoneComponent } from 'ngx-dropzone-wrapper';
 export class IndexComponent implements OnInit {
   @ViewChild("photoDropzone") photoDropzone: DropzoneComponent;
 
-  faUpload = faUpload;
+  icons ={
+    faUpload : faUpload,
+    faSpinner :faSpinner,
+  }
+  
   image:Image = {
     avatar:null,
     title:null,
@@ -20,6 +24,7 @@ export class IndexComponent implements OnInit {
   }
   newestImages:any[];
   errorMsgs:any = {};
+  loading:boolean = false;
   successMsg:string;
 
   constructor(private appService:AppService) { }
@@ -48,6 +53,7 @@ export class IndexComponent implements OnInit {
   }
 
   uploadImage(){
+    this.loading = true;
     this.successMsg = null;
     this.errorMsgs = {};
 
@@ -72,6 +78,7 @@ export class IndexComponent implements OnInit {
       }
     })
     this.appService.uploadImage(fd).subscribe((res:any) =>{
+      this.loading = false;
       if(res.success){
         this.successMsg = res.message;
         setTimeout(() => {
@@ -88,6 +95,7 @@ export class IndexComponent implements OnInit {
         }, 3000);
       }
     },err =>{
+      this.loading = false;
       if(err.error && err.error.errors){
         this.errorMsgs = err.error.errors;
       }

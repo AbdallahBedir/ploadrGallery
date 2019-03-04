@@ -3,7 +3,9 @@
   <header class="app-title">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" [routerLink]="['/']">ploadrGallery</a>
+          <a class="navbar-brand" [routerLink]="['/']">
+            <img class="rounded-circle" [attr.src]="'./assets/imgs/gallery.png'" alt="" width="99" style="width:99px">
+          </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -19,7 +21,7 @@
             <div class="profile-menu ml-auto">
               <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#666">
-                    <img class="rounded-circle" [attr.src]="user.photo || './assets/imgs/profile-placeholder.jpg'" alt="" width="44" style="width:44px">
+                    <img class="rounded-circle" [attr.src]="user.photo || './assets/imgs/profile-placeholder.jpg'" [attr.alt]="user.username" width="44" style="width:44px">
                     {{user.username}}                    
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
